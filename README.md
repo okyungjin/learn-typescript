@@ -10,6 +10,7 @@
     - [tsconfig.json](#tsconfigjson)
   - [TypeScript 변수 타입](#typescript-변수-타입)
     - [기본 타입](#기본-타입)
+    - [함수에 타입 정의](#함수에-타입-정의)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -145,6 +146,7 @@ sumNumbers(10, 20);
 - object
 - boolean
 
+**NOTES**
 ```ts
 // tuple
 const address: [string, number] = ['판교', 40];
@@ -154,6 +156,27 @@ const person: { age: number; name: string } = {
   age: 100,
   name: 'KyungJin'
 };
+```
+
+### [함수에 타입 정의](example/3_functions.ts)
+
+**함수 옵셔널 파라미터(optional parameter)**
+
+JavaScript 함수는 정의한 param 보다 많은 인자가 들어와도 오류가 발생하지 않고, 앞부터 순서대로 param으로 인식된다.
+```js
+function sum(a, b) {
+  return a + b;
+}
+
+sum(10, 20, 30, 40, 50)
+```
+
+TypeScript에서는 위와 같이 코드를 작성하면 오류가 발생하므로. **Optional Parameter**를 사용해야 한다.
+```ts
+function printText(text: string, type?: string) {
+  console.log(text);
+}
+printText('hi');
 ```
 
 # License & Copyright
