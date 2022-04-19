@@ -1,6 +1,6 @@
 # Table of Contents
 - [Table of Contents](#table-of-contents)
-- [About Project](#about-project)
+- [About Repository](#about-repository)
 - [Dev Notes](#dev-notes)
   - [JavaScript를 TypeScript처럼 사용하는 방법](#javascript를-typescript처럼-사용하는-방법)
     - [예시 1](#예시-1)
@@ -8,9 +8,11 @@
   - [TypeScript 프로젝트 시작하기](#typescript-프로젝트-시작하기)
     - [tsc 설치 및 실행](#tsc-설치-및-실행)
     - [tsconfig.json](#tsconfigjson)
+  - [TypeScript 변수 타입](#typescript-변수-타입)
+    - [기본 타입](#기본-타입)
 - [License & Copyright](#license--copyright)
 
-# About Project
+# About Repository
 
 인프런의 [타입스크립트 입문 - 기초부터 실전까지](https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%9E%85%EB%AC%B8?inst=f1ae9299&utm_source=blog&utm_medium=githubio&utm_campaign=captianpangyo&utm_term=banner) 온라인 강의를 수강하면서 습득한 지식을 기록한 레포지터리입니다.
 
@@ -122,11 +124,36 @@ sumNumbers(10, 20);
 ```json
 {
   "compilerOptions": {
-    "allowJs": true, // 프로젝트에 js 파일을 허용한다.
-    "checkJs": true, // @ts-check 와 동일한 기능
-    "noImplicitAny": true, // 최소한 any 타입이라도 넣어야 한다.
+    "allowJs": true,
+    "checkJs": true,
+    "noImplicitAny": true,
   }
 }
+```
+
+**옵션 설명**
+- `"allowJs": true` 프로젝트에 js 파일을 허용한다.
+- `"checkJs": true` @ts-check 와 동일한 기능
+- `"noImplicitAny": true` 최소한 any 타입이라도 넣어야 한다.
+
+## TypeScript 변수 타입
+### [기본 타입](example/1_type-basic.ts)
+- string
+- number
+- Array
+- tuple (모든 인덱스에 타입이 정해진 배열)
+- object
+- boolean
+
+```ts
+// tuple
+const address: [string, number] = ['판교', 40];
+
+// object
+const person: { age: number; name: string } = {
+  age: 100,
+  name: 'KyungJin'
+};
 ```
 
 # License & Copyright
