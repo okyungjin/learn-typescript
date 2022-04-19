@@ -13,6 +13,7 @@ const items: string[] = [];
 // items.push(10);
 
 // 튜플
+// 배열의 순서에 타입을 결정할 수 있는 타입을 튜플이라고 한다.
 const address: [string, number] = ['판교', 40];
 
 // 객체
