@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "noImplicitAny": true, // 최소한 any 타입이라도 넣어야 한다.
+    }
+}
