@@ -29,3 +29,23 @@ type Hero = {
 const capt: Hero = { 
   // skill: 'throwing a shield' 
 }
+
+interface IPerson {
+  name: string;
+  age: number;
+}
+
+type TPerson = {
+  name: string;
+  age: number;
+}
+
+const person1: IPerson = {
+  name: 'p1',
+  age: 30,
+}
+
+const person2: TPerson = {
+  name: 'p2',
+  age: 28,
+}

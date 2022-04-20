@@ -19,6 +19,9 @@
     - [5) 인덱싱](#5-인덱싱)
     - [6) Dictionary 패턴](#6-dictionary-패턴)
     - [7) 인터페이스 확장](#7-인터페이스-확장)
+  - [타입 별칭 (Type Alias)](#타입-별칭-type-alias)
+    - [정의 및 사용법](#정의-및-사용법)
+    - [인터페이스와 차이점](#인터페이스와-차이점)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -287,6 +290,66 @@ const kyungJ: Developer = {
 }
 ```
 
+
+## 타입 별칭 (Type Alias)
+타입 별칭은 말 그대로 타입에 대한 별명이다. 긴 타입 정의에 별명을 붙여 간결하게 사용할 수 있도록 해준다.
+### 정의 및 사용법
+인터페이스와 유사한 문법인 `Type Alias` 는 다음과 같이 사용한다.
+
+```ts
+type MyString = string;
+const str: MyString = 'hello'
+```
+
+```ts
+type Todo = {
+  id: number;
+  title: string;
+  done: boolean;
+}
+
+function getTodo(todo: Todo) { ... }
+```
+
+```ts
+type Person = {
+  name: string;
+  age: number;
+}
+
+const person: Person = {
+  name: 'person',
+  age: 25,
+}
+```
+
+
+### 인터페이스와 차이점
+타입 별칭은 인터페이스와 상당히 유사해 보인다.
+```ts
+interface IPerson {
+  name: string;
+  age: number;
+}
+
+type TPerson = {
+  name: string;
+  age: number;
+}
+
+const person1: IPerson = {
+  name: 'p1',
+  age: 30,
+}
+
+const person2: TPerson = {
+  name: 'p2',
+  age: 28,
+}
+```
+
+타입 별칭과 인터페이스는 용법이 유사하지만 **타입 별칭은 확장이 불가**하다는데에 큰 차이가 있다.
+TypeScript 공식 문서에서도 가급적 인터페이스를 사용하라고 권고하고 있다.
 
 
 # License & Copyright
