@@ -26,6 +26,10 @@
     - [유니온 타입 (Union Type)](#유니온-타입-union-type)
     - [인터섹션 타입 (Intersection Type)](#인터섹션-타입-intersection-type)
     - [유니온 타입과 인터섹션 타입의 차이점](#유니온-타입과-인터섹션-타입의-차이점)
+  - [Enum](#enum)
+    - [숫자형 Enum](#숫자형-enum)
+    - [문자형 Enum](#문자형-enum)
+    - [Enum 활용 사례](#enum-활용-사례)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -456,6 +460,65 @@ askSomeoneIntersection(developer); // Error
 askSomeoneIntersection(person); // Error
 ```
 `askSomeoneUnion` 는 오류 없이 실행되지만, `askSomeoneIntersection` 에서는 오류가 발생한다. `askSomeoneIntersection` 의 param에는 `name`, `skill`, `age` 속성을 모두 가지는 객체가 와야 한다.
+
+## Enum
+### 숫자형 Enum
+```ts
+enum Shoes {
+  Nike,
+  Adidas,
+}
+
+var myShoes: Shoes = Shoes.Nike;
+console.log(myShoes); // 0
+```
+
+### 문자형 Enum
+```ts
+enum Shoes {
+  Nike = '나이키',
+  Adidas = '아디다스',
+}
+
+var myShoes: Shoes = Shoes.Nike;
+console.log(myShoes); // '나이키'
+```
+
+### Enum 활용 사례
+정답 혹은 오답을 출력하는 `askQuestion` 함수가 있다. 이 함수의 인자로 y, yes, YES 등 다양한 문자열이 들어갈 수 있다.
+
+```ts
+function askQuestion(answer: string) {
+	if (answer === 'yes')
+		console.log('정답입니다.')
+	if (answer === 'no')
+		console.log('오답입니다.')
+}
+
+askQuestion('y');
+askQuestion('yes');
+askQuestion('YES');
+```
+
+이러한 경우 Enum을 사용하여 함수의 잘못된 사용을 방지할 수 있다.
+
+```ts
+enum Answer {
+	Yes,
+	No
+}
+
+function askQuestion(answer: Answer) {
+	if (answer === Answer.Yes)
+		console.log('정답입니다.')
+	if (answer === Answer.No)
+		console.log('오답입니다.')
+}
+
+askQuestion('y'); // Error
+askQuestion('yes'); // Error
+askQuestion(Answer.Yes);
+```
 
 
 
