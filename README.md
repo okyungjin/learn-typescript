@@ -31,11 +31,13 @@
     - [문자형 Enum](#문자형-enum)
     - [Enum 활용 사례](#enum-활용-사례)
   - [클래스 (Class)](#클래스-class)
-  - [[JavaScript] Class](#javascript-class)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
     - [Prototype 활용 사례 #2](#prototype-활용-사례-2)
+  - [[JavaScript] Class](#javascript-class)
+    - [Class 사용법](#class-사용법)
+    - [Class와 Prototype의 관계](#class와-prototype의-관계)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -527,37 +529,29 @@ askQuestion(Answer.Yes);
 ```
 
 ## 클래스 (Class)
+TypeScript의 클래스를 이해하기 위해서는 JavaScript의 클래스부터 이해해야 한다.
 
-## [JavaScript] Class
-TypeScript의 클래스를 이해하기 전에 JavaScript의 클래스부터 살펴보자.
+- [[JavaScript] Prototype](#javascript-prototype)
+- [[JavaScript] Class](#javascript-class)
 
-```js
+TypeScript에서는 속성을 정의해야 하며, 속성에 access modifier를 붙일 수 있다.
+
+```ts
 class Person {
-  constructor() {
-    console.log('생성 되었습니다.');
-  }
-}
+  private name: string;
+  private age: number;
+  readonly log: string;
 
-new Person(); // 생성 되었습니다.
-```
-
-생성자에 인자를 넣을 수도 있다.
-```js
-class Person {
-  constructor(name, age) {
+  constructor(name: string, age: number) {
     this.name = name;
     this.age = age;
   }
 }
-
-new Person('경진', 27);
 ```
 
 
 
 ## [JavaScript] Prototype
-JavaScript에서 클래스를 왜 사용하는지 이해하기 위해서는 Prototype에 대한 이해가 필요하다.
-
 ### Prototype을 사용하는 이유
 ```js
 const user = { name: '경진', age: 27 };
@@ -599,6 +593,54 @@ Prototype은 단순히 객체를 확장하는 것 뿐만 아니라, 정의된 �
 var obj = { a: 10 };
 obj.hasOwnProperty('a'); // true
 ```
+## [JavaScript] Class
+### Class 사용법
+
+```js
+class Person {
+  constructor() {
+    console.log('생성 되었습니다.');
+  }
+}
+
+new Person(); // 생성 되었습니다.
+```
+
+생성자에 인자를 넣을 수도 있다.
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+new Person('경진', 27);
+```
+### Class와 Prototype의 관계
+Class는 기존 기능(Prototype)은 유지한 채 문법만 변경된 Syntactic suger이다.
+아래 두 코드는 정확하게 동일한 코드이다.
+
+```js
+function Person(name, age) {
+	this.name = name;
+	this.age = age;
+}
+
+const kyungj = new Person('경진', 27);
+```
+```js
+class Person {
+	constructor(name, age) {
+		this.name = name;
+		this.age = age;
+	}
+}
+
+const kyungj = new Person('경진', 27);
+```
+
+
 
 
 # License & Copyright

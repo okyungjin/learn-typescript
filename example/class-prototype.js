@@ -30,15 +30,8 @@ console.log(admin);
 admin.role = 'admin'
   
   
-// Prototype 활용 사례 # 2
-var obj = { a: 10 };
-Object.keys(obj); // ["a"]
+// Class와 Prototype의 관계
 
-// obj에 hasOwnProperty 라는 함수를 사용할 수 있는 것은
-// obj가 prototype으로 기본 객체의 함수들을 상속 받기 때문이다.
-
-// 이러한 API를 Build-in JavaScript 또는 JavaScript Native API 라고 한다.
-obj.hasOwnProperty('a'); // true
 
 
 
