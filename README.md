@@ -12,13 +12,13 @@
     - [기본 타입](#기본-타입)
     - [함수에 타입 정의](#함수에-타입-정의)
   - [인터페이스 (Interface)](#인터페이스-interface)
-    - [인터페이스 정의](#인터페이스-정의)
-    - [변수에 사용](#변수에-사용)
-    - [함수에 사용](#함수에-사용)
-    - [함수의 스펙(구조)에 사용](#함수의-스펙구조에-사용)
-    - [인덱싱](#인덱싱)
-    - [Dictionary 패턴](#dictionary-패턴)
-    - [인터페이스 확장](#인터페이스-확장)
+    - [1) 인터페이스 정의](#1-인터페이스-정의)
+    - [2) 변수에 사용](#2-변수에-사용)
+    - [3) 함수에 사용](#3-함수에-사용)
+    - [4) 함수의 스펙(구조)에 사용](#4-함수의-스펙구조에-사용)
+    - [5) 인덱싱](#5-인덱싱)
+    - [6) Dictionary 패턴](#6-dictionary-패턴)
+    - [7) 인터페이스 확장](#7-인터페이스-확장)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -188,9 +188,13 @@ printText('hi');
 ```
 
 ## 인터페이스 (Interface)
-인터페이스는 상호 간의 약속이다. 인터페이스를 지정하면 User가 가지는 속성을 쉽게 파악할 수 있다.
+인터페이스는 상호 간의 약속이다. 인터페이스를 사용하면 객체가 가지는 속성을 파악하기에 용이하다.
 
-### 인터페이스 정의
+아래 예시에서 소스를 처음 보는 사람도 `User` 라는 객체에는 `age`, `name` 속성이 있다는 것을 쉽게 파악할 수 있다.
+
+api 응답에 대한 인터페이스를 구성해놓으면 편리하다.
+
+### 1) 인터페이스 정의
 
 ```ts
 interface User {
@@ -199,7 +203,7 @@ interface User {
 }
 ```
 
-### 변수에 사용
+### 2) 변수에 사용
 ```ts
 const kyungj: User = {
   age: 27,
@@ -207,7 +211,7 @@ const kyungj: User = {
 }
 ```
 
-### 함수에 사용
+### 3) 함수에 사용
 ```ts
 function getUser(user: User) {
   console.log(user);
@@ -216,7 +220,7 @@ function getUser(user: User) {
 getUser(kyungj);
 ```
 
-### 함수의 스펙(구조)에 사용
+### 4) 함수의 스펙(구조)에 사용
 ```ts
 interface Sumfunction {
   (a: number, b: number): number;
@@ -227,7 +231,7 @@ const sum: Sumfunction = function(a: number, b: number): number {
 }
 ```
 
-### 인덱싱
+### 5) 인덱싱
 ```ts
 interface StringArray {
   [index: number]: string;
@@ -238,7 +242,7 @@ const arr = ['a', 'b', 'c'];
 arr[0] = 'd';
 ```
 
-### Dictionary 패턴
+### 6) Dictionary 패턴
 ```ts
 // 딕셔너리 패턴
 interface StringRegexDict {
@@ -255,7 +259,7 @@ obj['cssFile'] = 'abc'; // Error 발생
 obj['cssFile'] = /abc/; // Error 발생하지 않음
 ```
 
-### 인터페이스 확장
+### 7) 인터페이스 확장
 아래 예시에서 `Developer` 인터페이스는 `Person` 인터페이스의 속성인 `name`, `age` 가 정의되어 있다.
 
 ```ts
@@ -282,6 +286,7 @@ const kyungJ: Developer = {
   skills: ['js', 'ts']
 }
 ```
+
 
 
 # License & Copyright
