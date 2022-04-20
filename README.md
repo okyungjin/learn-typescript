@@ -11,6 +11,14 @@
   - [TypeScript 변수 타입](#typescript-변수-타입)
     - [기본 타입](#기본-타입)
     - [함수에 타입 정의](#함수에-타입-정의)
+  - [인터페이스 (Interface)](#인터페이스-interface)
+    - [인터페이스 정의](#인터페이스-정의)
+    - [변수에 사용](#변수에-사용)
+    - [함수에 사용](#함수에-사용)
+    - [함수의 스펙(구조)에 사용](#함수의-스펙구조에-사용)
+    - [인덱싱](#인덱싱)
+    - [Dictionary 패턴](#dictionary-패턴)
+    - [인터페이스 확장](#인터페이스-확장)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -178,6 +186,103 @@ function printText(text: string, type?: string) {
 }
 printText('hi');
 ```
+
+## 인터페이스 (Interface)
+인터페이스는 상호 간의 약속이다. 인터페이스를 지정하면 User가 가지는 속성을 쉽게 파악할 수 있다.
+
+### 인터페이스 정의
+
+```ts
+interface User {
+  age: number;
+  name: string;
+}
+```
+
+### 변수에 사용
+```ts
+const kyungj: User = {
+  age: 27,
+  name: 'KyungJin Jung'
+}
+```
+
+### 함수에 사용
+```ts
+function getUser(user: User) {
+  console.log(user);
+}
+
+getUser(kyungj);
+```
+
+### 함수의 스펙(구조)에 사용
+```ts
+interface Sumfunction {
+  (a: number, b: number): number;
+}
+
+const sum: Sumfunction = function(a: number, b: number): number {
+  return a + b;
+}
+```
+
+### 인덱싱
+```ts
+interface StringArray {
+  [index: number]: string;
+}
+
+const arr = ['a', 'b', 'c'];
+// arr[0] = 10 -> Error
+arr[0] = 'd';
+```
+
+### Dictionary 패턴
+```ts
+// 딕셔너리 패턴
+interface StringRegexDict {
+  [key: string]: RegExp
+}
+
+const obj: StringRegexDict = {
+  // sth: 'css' -> Error
+  cssFile: /\.css$/,
+  jsFile: /\.js$/,
+}
+
+obj['cssFile'] = 'abc'; // Error 발생
+obj['cssFile'] = /abc/; // Error 발생하지 않음
+```
+
+### 인터페이스 확장
+아래 예시에서 `Developer` 인터페이스는 `Person` 인터페이스의 속성인 `name`, `age` 가 정의되어 있다.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Developer {
+  name: string;
+  age: number;
+  skills: string[],
+}
+```
+이러한 경우 `extends` 를 사용하여 인터페이스를 상속 받으면 된다.
+```ts
+interface Developer extends Person {
+  skills: string[],
+}
+
+const kyungJ: Developer = {
+  name: 'KyungJin Jung',
+  age: 27,
+  skills: ['js', 'ts']
+}
+```
+
 
 # License & Copyright
 
