@@ -24,6 +24,8 @@
     - [인터페이스와 차이점](#인터페이스와-차이점)
   - [연산자를 이용한 타입 정의](#연산자를-이용한-타입-정의)
     - [유니온 타입 (Union Type)](#유니온-타입-union-type)
+    - [인터섹션 타입 (Intersection Type)](#인터섹션-타입-intersection-type)
+    - [유니온 타입과 인터섹션 타입의 차이점](#유니온-타입과-인터섹션-타입의-차이점)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -402,7 +404,7 @@ interface Person {
     age: number;
 }
 
-function askSomeone(someone: Developer | Person) {
+function askSomeoneUnion(someone: Developer | Person) {
   console.log(someone.name);
 }
 ```
@@ -414,6 +416,47 @@ union 속성에서 주의해야 할 점이 있다.
 TypeScript는 인자로 `Devloper` 가 들어올지 `Person` 이 들어올 지 알 수 없다.  `someone.age` 등의 접근을 허용하게 되면 오류가 발생할 수 있으므로 공통 속성의 접근만 허용한다.
 
 **헷갈리니 주의하도록 하자!**
+
+
+### 인터섹션 타입 (Intersection Type)
+인터섹션을 사용하면 `Developer` 와 `Person` 이 가지고 있는 모든 속성의 타입을 포함하는 새로운 타입으로 정의한 것이다. 따라서 `name`, `skill`, `age` 에 모두 접근할 수 있다.
+
+```ts
+interface Developer {
+    name: string;
+    skill: string;
+}
+
+interface Person {
+    name: string;
+    age: number;
+}
+
+function askSomeoneIntersection(someone: Developer & Person): void {
+    console.log(someone.name);
+    console.log(someone.skill);
+    console.log(someone.age);
+}
+```
+
+<img width="616" alt="스크린샷 2022-04-20 오전 11 59 29" src="https://user-images.githubusercontent.com/31913666/164141539-48401d65-1002-4523-8486-016b87b2ba07.png">
+
+
+### 유니온 타입과 인터섹션 타입의 차이점
+유니온 타입과 인터섹션 타입의 차이는 사용 예시를 보면 쉽게 이해가 가능하다.
+
+```ts
+const developer: Developer = { name: 'Kim', skill: 'ts' };
+const person: Person = { name: 'Jung', age: 27 };
+
+askSomeoneUnion(developer);
+askSomeoneUnion(person);
+
+askSomeoneIntersection(developer); // Error
+askSomeoneIntersection(person); // Error
+```
+`askSomeoneUnion` 는 오류 없이 실행되지만, `askSomeoneIntersection` 에서는 오류가 발생한다. `askSomeoneIntersection` 의 param에는 `name`, `skill`, `age` 속성을 모두 가지는 객체가 와야 한다.
+
 
 
 # License & Copyright

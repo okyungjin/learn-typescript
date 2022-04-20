@@ -26,6 +26,29 @@ interface Person {
     age: number;
 }
 
-function askSomeone(someone: Developer | Person) {
+function askSomeoneUnion(someone: Developer | Person): void {
     console.log(someone.name);
 }
+
+
+// Intersection Type # 1
+let invalidType: string & number & boolean;
+
+
+// Intersection Type # 2
+function askSomeoneIntersection(someone: Developer & Person): void {
+    console.log(someone.name);
+    console.log(someone.skill);
+    console.log(someone.age);
+}
+
+
+// 유니온과 인터섹션의 차이점
+const developer: Developer = { name: 'Kim', skill: 'ts' };
+const person: Person = { name: 'Jung', age: 27 };
+
+askSomeoneUnion(developer);
+askSomeoneUnion(person);
+
+askSomeoneIntersection(developer); // Error
+askSomeoneIntersection(person); // Error
