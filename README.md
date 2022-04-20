@@ -30,6 +30,12 @@
     - [숫자형 Enum](#숫자형-enum)
     - [문자형 Enum](#문자형-enum)
     - [Enum 활용 사례](#enum-활용-사례)
+  - [클래스 (Class)](#클래스-class)
+  - [[JavaScript] Class](#javascript-class)
+  - [[JavaScript] Prototype](#javascript-prototype)
+    - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
+    - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
+    - [Prototype 활용 사례 #2](#prototype-활용-사례-2)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -520,6 +526,79 @@ askQuestion('yes'); // Error
 askQuestion(Answer.Yes);
 ```
 
+## 클래스 (Class)
+
+## [JavaScript] Class
+TypeScript의 클래스를 이해하기 전에 JavaScript의 클래스부터 살펴보자.
+
+```js
+class Person {
+  constructor() {
+    console.log('생성 되었습니다.');
+  }
+}
+
+new Person(); // 생성 되었습니다.
+```
+
+생성자에 인자를 넣을 수도 있다.
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+new Person('경진', 27);
+```
+
+
+
+## [JavaScript] Prototype
+JavaScript에서 클래스를 왜 사용하는지 이해하기 위해서는 Prototype에 대한 이해가 필요하다.
+
+### Prototype을 사용하는 이유
+```js
+const user = { name: '경진', age: 27 };
+const admin = { name: '관리자', age: 30, role: 'admin' };
+```
+user와 admin을 정의하려는데 name, age 등의 속성이 중복되는 것을 볼 수 있다.
+이러한 경우 Prototype을 사용하려 코드의 중복을 방지할 수 있다.
+
+### Prototype 활용 사례 #1
+Prototype을 사용하여 user의 정보를 admin에서 재활용해보자.
+`admin.__proto__ = user` 를 통해 user의 기본 정보들을 admin이 상속 받을 수 있다.
+
+```js
+const user = { name: '경진', age: 27 };
+
+let admin = {};
+admin.__proto__ = user;
+
+console.log(admin);
+```
+
+<img width="376" alt="스크린샷 2022-04-20 오후 12 44 45" src="https://user-images.githubusercontent.com/31913666/164146152-597a7886-55f9-4789-912a-053f74fad890.png">
+
+
+이제 user의 정보를 상속 받았으니 admin의 role을 추가해준다.
+```js
+admin.role = 'admin';
+```
+
+### Prototype 활용 사례 #2
+obj에 `hasOwnProperty` 라는 함수를 사용할 수 있는 것은 obj가 prototype으로 기본 객체의 함수들을 상속 받기 때문에 가능하다.
+
+이러한 API를 **Build-in JavaScript** 또는 **JavaScript Native API** 라고 한다.
+
+
+Prototype은 단순히 객체를 확장하는 것 뿐만 아니라, 정의된 함수도 사용할 수 있게 해준다는 점을 기억하자.
+
+```js
+var obj = { a: 10 };
+obj.hasOwnProperty('a'); // true
+```
 
 
 # License & Copyright
