@@ -22,6 +22,8 @@
   - [타입 별칭 (Type Alias)](#타입-별칭-type-alias)
     - [정의 및 사용법](#정의-및-사용법)
     - [인터페이스와 차이점](#인터페이스와-차이점)
+  - [연산자를 이용한 타입 정의](#연산자를-이용한-타입-정의)
+    - [유니온 타입 (Union Type)](#유니온-타입-union-type)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -350,6 +352,68 @@ const person2: TPerson = {
 
 타입 별칭과 인터페이스는 용법이 유사하지만 **타입 별칭은 확장이 불가**하다는데에 큰 차이가 있다.
 TypeScript 공식 문서에서도 가급적 인터페이스를 사용하라고 권고하고 있다.
+
+## 연산자를 이용한 타입 정의
+### 유니온 타입 (Union Type)
+두 개 이상의 타입을 허용하고 싶을 때 pipe (`|`) 연산자를 사용하여 타입을 Union 할 수 있다.
+`logMessage` 는 인자로 `string` 과 `number` 타입을 허용한다.
+
+```ts
+function logMessage(value: string | number): void {
+    console.log(value);
+}
+
+logMessage('hello');
+logMessage(10);
+```
+
+<br>
+
+**예시 1**
+타입 유니온의 장점으로는 타입에 따른 분기 생성이 가능하다는 것이다.
+```ts
+function logMessage(value: string | number): void {
+  if (typeof value === 'number') {
+    console.log(value.toLocaleString());
+    return;
+  }
+  if (typeof value === 'string') {
+    console.log(value);
+    return;
+  }
+  throw new TypeError('value must be string or number');
+}
+
+logMessage('hello');
+logMessage(10);
+```
+
+<br >
+
+**예시 2**
+```ts
+interface Developer {
+    name: string;
+    skill: string;
+}
+
+interface Person {
+    name: string;
+    age: number;
+}
+
+function askSomeone(someone: Developer | Person) {
+  console.log(someone.name);
+}
+```
+union 속성에서 주의해야 할 점이 있다.
+> `Developer | Person` 일 때 someone에서 접근 가능한 가능한 프로퍼티는 두 인터페이스의 공통 프로퍼티인 `name` 뿐이라는 것이다.
+
+<img width="479" alt="스크린샷 2022-04-20 오전 11 39 06" src="https://user-images.githubusercontent.com/31913666/164136065-60116c07-1f66-4e47-a709-da55e73f5a53.png">
+
+TypeScript는 인자로 `Devloper` 가 들어올지 `Person` 이 들어올 지 알 수 없다.  `someone.age` 등의 접근을 허용하게 되면 오류가 발생할 수 있으므로 공통 속성의 접근만 허용한다.
+
+**헷갈리니 주의하도록 하자!**
 
 
 # License & Copyright
