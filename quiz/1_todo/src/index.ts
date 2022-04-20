@@ -1,18 +1,18 @@
-let todoItems: {id: number, title: string, done: boolean}[];
-/*
-  다음과 같이 정의해줄 수 있다.
-  let todoItems: {id: number, title: string, done: boolean}[];
-*/
-
 interface Todo {
-  id: number,
-  title: string,
-  done: boolean
+  id: number;
+  title: string;
+  done: boolean;
 }
 /*
-    type define으로도 Todo를 선언할 수 있다.
-    type Todo = {id: number, title: string, done: boolean};
+  [#1] Interface 사용하지 않고 정의하기
+  다음과 같이 정의해줄 수 있으나 소스의 중복이 발생한다.
+  let todoItems: {id: number, title: string, done: boolean}[];
+
+  [#2] type define으로도 Todo를 선언할 수 있다.
+  type Todo = {id: number, title: string, done: boolean};
 */
+
+let todoItems: Todo[];
 
 // api
 function fetchTodoItems(): Todo[] {
