@@ -49,6 +49,9 @@
     - [타입 가드가 필요한 상황](#타입-가드가-필요한-상황)
     - [타입 가드 정의 및 사용](#타입-가드-정의-및-사용)
   - [타입 호환 (Type Compatibility)](#타입-호환-type-compatibility)
+    - [인터페이스 & 클래스](#인터페이스--클래스)
+    - [함수](#함수)
+    - [제네릭](#제네릭)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
@@ -850,8 +853,94 @@ if (isDeveloper(kyungj)) {
 ## 타입 호환 (Type Compatibility)
 **타입 호환**이란 TypeScript 코드에서 특정 타입이 다른 타입에 잘 맞는지를 의미한다.
 
+### 인터페이스 & 클래스
+인터페이스의 타입 호환에 대해 알아보자.
+인터페이스의 속성만 포함된다면 다른 인터페이스로 정의된 변수를 할당할 수 있다.
 
+주의할 점은 **오른쪽 객체가 왼쪽 객체의 속성을 모두 포함해야 한다**는 것이다.
+따라서 `devloper = person` 는 오류가 발생하며, `person = devloper` 는 가능하다.
 
+```ts
+interface Developer {
+  name: string;
+  skill: string;
+}
+
+interface Person {
+  name: string;
+}
+
+let developer: Developer;
+let person: Person;
+
+developer = person; // Error
+person = developer;
+```
+
+<br>
+
+클래스로 생성된 객체도 인터페이스 객체에 할당이 가능하다.
+`인퍼페이스 = 인터페이스`, `클래스 = 클래스` 는 아니라는 것이다.
+
+```ts
+interface Developer {
+  name: string;
+  skill: string;
+}
+
+interface IPerson {
+  name: string;
+}
+
+class CPerson {
+  name: string;
+}
+
+let developer: IDeveloper;
+let iPerson: IPerson;
+let cPerson: CPerson;
+
+developer = iPerson; // Error
+developer = cPerson; // Error
+
+iPerson = developer;
+cPerson = developer;
+```
+
+### 함수
+- [ ] 강의 내용과 실제 동작이 상이하여 확인 필요함.
+```ts
+var add = function(a: number) {}
+var sum = function(a: number, b: number) {}
+
+sum = add; // Error
+add = sum;
+```
+
+### 제네릭
+**호환 가능한 제네릭**
+```ts
+interface Empty<T> {}
+
+let empty1 = Empty<string>;
+let empty2 = Empty<number>;
+
+empty1 = empty2;
+empty2 = empty1;
+```
+
+**호환 불가능한 제네릭**
+```ts
+interface NotEmpty<T> {
+  data: T
+}
+
+let empty1 = NotEmpty<string>;
+let empty2 = NotEmpty<number>;
+
+empty1 = empty2; // Error
+empty2 = empty1; // Error
+```
 ## [JavaScript] Prototype
 ### Prototype을 사용하는 이유
 ```js
