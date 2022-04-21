@@ -52,6 +52,9 @@
     - [인터페이스 & 클래스](#인터페이스--클래스)
     - [함수](#함수)
     - [제네릭](#제네릭)
+  - [타입 모듈화](#타입-모듈화)
+    - [모듈화 전](#모듈화-전)
+    - [모듈화 후](#모듈화-후)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
@@ -941,6 +944,39 @@ let empty2 = NotEmpty<number>;
 empty1 = empty2; // Error
 empty2 = empty1; // Error
 ```
+
+## 타입 모듈화
+### 모듈화 전
+```ts
+interface Todo {
+  title: string;
+  checked: boolean;
+}
+
+const item: Todo = {
+  title: 'Todo 1',
+  checked: false,
+};
+```
+실제 프로젝트를 진행하면 인터페이스 정의와 사용에 대한 소스가 파일로 나누어져 있는 경우가 많다. 유지보수를 위해서라도 인터페이스를 모듈화하는 것이 좋다.
+### 모듈화 후
+```ts
+// example/ts-modules/types.ts
+export interface Todo {
+  title: string;
+  checked: boolean;
+}
+```
+```ts
+// example/ts-modules/app.ts
+import { Todo } from './types'
+
+const item: Todo = {
+  title: 'Todo 1',
+  checked: false,
+};
+```
+
 ## [JavaScript] Prototype
 ### Prototype을 사용하는 이유
 ```js
