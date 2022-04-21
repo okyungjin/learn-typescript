@@ -13,6 +13,16 @@ function getValue<T>(value: T): T {
 getValue('hi').toLocaleUpperCase();
 getValue(100).toLocaleString();
 
+
+// 유니온과의 차이점
+function logText(text: string | number) {
+  console.log(text);
+  return text;
+}
+
+const log = logText('a');
+log.split();
+
 // 제네릭 기본 문법 - 인터페이스
 interface Developer<T> {
   name: string;
