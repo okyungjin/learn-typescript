@@ -31,6 +31,14 @@
     - [문자형 Enum](#문자형-enum)
     - [Enum 활용 사례](#enum-활용-사례)
   - [클래스 (Class)](#클래스-class)
+  - [제네릭 (Generic)](#제네릭-generic)
+    - [제네릭 사용하기](#제네릭-사용하기)
+    - [유니온 타입과의 차이점](#유니온-타입과의-차이점)
+    - [제네릭의 장점](#제네릭의-장점)
+    - [제네릭 실전 예제](#제네릭-실전-예제)
+    - [제네릭의 타입 제한 #1 - 배열 힌트 주기](#제네릭의-타입-제한-1---배열-힌트-주기)
+    - [제네릭의 타입 제한 #2 - 정의된 타입 이용하기](#제네릭의-타입-제한-2---정의된-타입-이용하기)
+    - [제네릭의 타입 제한 #3 - `keyof` 사용](#제네릭의-타입-제한-3---keyof-사용)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
@@ -549,7 +557,137 @@ class Person {
 }
 ```
 
+## 제네릭 (Generic)
+### 제네릭 사용하기
+`getNumber` 함수는 number를 인자로 받아 number를 반환하는 함수이고,
+`getArray` 는 string[]을 인자로 받아 string[]을 반환하는 함수이다.
 
+```ts
+function getNumber(value: number) {
+  return value;
+}
+
+function getArray(value: string[]) {
+  return value;
+}
+```
+이처럼 타입만 상이하고 기능이 동일할 때 제네릭을 사용하면 코드의 중복을 줄일 수 있다.
+
+```ts
+function getValue<T>(value: T): T {
+  return value;
+}
+
+logText<string>('하이');
+```
+`logText('하이');` 로 사용해도 타입 추론을 통해 T가 string 이라는 것을 알 수 있지만, `<string>` 을 사용하여 타입을 명시해주는 것이 좋다.
+
+### 유니온 타입과의 차이점
+제네릭과 유니온 타입이 유사해 보일 수도 있는데 사용 시에 차이점이 있다.
+```ts
+function logText(text: string | number) {
+  console.log(text);
+  return text;
+}
+
+const log = logText('a');
+log.split(); // Error
+```
+유니온 타입으로 선언한 `logText` 의 반환값을 `log` 변수에 저장한다. `log` 변수에 `split()` 함수를 사용하려고 하면 오류가 난다.
+
+`log` 변수에는 string과 number 타입을 모두 충족하는 함수만 사용이 가능하다. 따라서, string에서만 사용할 수 있는 `split()` 을 사용하려면 오류가 발생한다.
+
+### 제네릭의 장점
+제네릭을 사용하면 **함수를 호출하는 시점에 함수의 타입을 정의**할 수 있다.
+```ts
+function logText<T>(text: T): T{
+  console.log(text);
+  return text;
+}
+
+const str = logText<string>('abc');
+str.split('');
+const login = logText<boolean>(false);
+```
+`str.split('')` 같이 `<string>` 으로 정의된 logText의 반환 값에는 `split()` 을 사용할 수 있다.
+
+`logText<boolean>` 로 타입을 지정하면 인자에는 boolean 값만 넣을 수 있다.
+
+### 제네릭 실전 예제
+[dropdown-generic.ts](example/dropdown-generic.ts) 커밋 확인!
+
+**유용한 팁**
+`createDropdownItem` 함수에서 item으로 제네릭의 타입을 제한하고 있는데 조금 더 개선해보자.
+
+```ts
+function createDropdownItem(item: DropdownItem<string> | DropdownItem<number>) {
+  // ... 
+}
+```
+
+`createDropdownItem` 에 제네릭을 사용하여 타입을 제한할 수 있다.
+```ts
+function createDropdownItem<T>(item: DropdownItem<T>) { // 제네릭 타입을 DropdownItem에 넘겨주기
+  // 생략
+}
+
+emails.forEach(function (email) {
+  const item = createDropdownItem<string>(email); // 제네릭 사용
+  // 이하 생략
+});
+```
+
+### 제네릭의 타입 제한 #1 - 배열 힌트 주기
+다음과 같이 제네릭 함수 안에서 `text.length` 를 출력하려고 하면 오류가 발생한다.
+TypeScript는 T가 배열인지 알 수 없기 때문이다.
+
+```ts
+function logTextLength<T>(text: T): T {
+  console.log(text.length); // Error
+  return text;
+}
+```
+배열이라는 힌트를 주려면 `T[]` 를 사용하면 된다.
+```ts
+function logTextLength<T>(text: T[]): T[] {
+  console.log(text.length);
+  return text;
+}
+```
+
+### 제네릭의 타입 제한 #2 - 정의된 타입 이용하기
+```ts
+interface LengthType {
+  length: number;
+}
+
+function logTextLength<T extends LengthType>(text: T): T {
+  console.log(text.length);
+  return text;
+}
+```
+
+### 제네릭의 타입 제한 #3 - `keyof` 사용
+`getAllowedOptions` 라는 함수의 인자로 `ShoppingItems` 의 속성인 `name`, `price`, `address`, `stock` 중 하나만 받도록 만들고 싶다.
+
+```ts
+interface ShoppingItems {
+  name: string;
+  price: number;
+  address: string;
+  stock: number;
+}
+getAllowedOptions();
+```
+`extends keyof` 를 사용하여 제네릭을 정의해주면 된다.
+```ts
+function getShoppingItemOption<T extends keyof ShoppingItems>(itemOption: T): T {
+  return itemOption
+}
+
+getShoppingItemOption('name');
+getShoppingItemOption('price'); // 외의 문자열은 오류 발생
+```
 
 ## [JavaScript] Prototype
 ### Prototype을 사용하는 이유
