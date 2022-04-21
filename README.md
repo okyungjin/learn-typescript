@@ -42,6 +42,9 @@
   - [타입 추론 (Type Inference)](#타입-추론-type-inference)
     - [상속 받은 인터페이스의 타입 추론](#상속-받은-인터페이스의-타입-추론)
     - [Best Common Type](#best-common-type)
+  - [타입 단언 (Type Assertion)](#타입-단언-type-assertion)
+    - [타입 단언이란](#타입-단언이란)
+    - [실용적인 예제 - DOM API 조작](#실용적인-예제---dom-api-조작)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
@@ -755,6 +758,46 @@ const arr1 = [1, 2, 3]; // Type: number
 const arr2 = [1, 2, true] // Type: number | boolean
 ```
 
+## 타입 단언 (Type Assertion)
+### 타입 단언이란
+`let b = a` 를 실행해도 `b` 의 타입은 any로 추론된다.
+중간에 `a` 의 값이 변경되었으나 처음에 any 타입으로 선언되었기 때문이다. `b` 는 `a` 가 선언된 시점의 타입을 할당 받는다.
+
+```ts
+let a; // Type: any
+a = 20; // Type: any
+a = 'a' // Type: any
+
+let b = a // Type of 'b': any
+```
+`b` 에 string 타입을 지정해주고 싶다면 다음과 같이 `as` 키워드로 **타입 단언**을 해주면 된다.
+```ts
+let b = a as string; // Type of 'b': string
+```
+
+**타입 단언**이라는 의미는 `내가 타입을 지정할테니 TypeScript 너는 타입 신경쓰지마` 같은 의미이다.
+
+### 실용적인 예제 - DOM API 조작
+실무 프로젝트에서 타입 단언은 DOM API를 조작할 때 주로 사용된다.
+
+`app` 의 타입은 `HTMLDivElement | null` 이다. DOM에 항상 id가 `app` 인 태그가 존재한다고 보장할 수 없기 때문이다.
+
+따라서 `app.innerHTML` 을 사용하려면 if로 감싸서 null이 아니라는 보장을 해주어야 한다.
+
+```ts
+const app = document.querySelector('#app');
+if (app) {
+  app.innerHTML;
+}
+```
+
+타입 단언을 사용하면 `app` 은 무조건 `HTMLDivElement` 타입이므로 `app.innerHTML` 을 바로 사용할 수 있다.
+
+```ts
+const app = document.querySelector('#app') as HTMLDivElement;
+app.innerHTML;
+
+```
 ## [JavaScript] Prototype
 ### Prototype을 사용하는 이유
 ```js
