@@ -31,8 +31,22 @@ admin.role = 'admin'
   
   
 // Class와 Prototype의 관계
+function Person(name, age) {
+	this.name = name;
+	this.age = age;
+}
+
+const kyungj = new Person('경진', 27);
 
 
+class Person {
+	constructor(name, age) {
+		this.name = name;
+		this.age = age;
+	}
+}
+
+const kyungj = new Person('경진', 27);
 
 
 
