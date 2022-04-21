@@ -18,9 +18,10 @@ interface DetailedDropdown<T> extends Dropdown<T> {
   description: string;
   tag: T;
 }
+
 var detailItems: DetailedDropdown<number> = {
-  value: 'hi',
-  title: 'a',
-  description: 'b',
-  tag: 'c'
+  description: 'desc',
+  tag: 10,
+  value: 10,
+  title: 'title',
 }

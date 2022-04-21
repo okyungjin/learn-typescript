@@ -39,6 +39,9 @@
     - [제네릭의 타입 제한 #1 - 배열 힌트 주기](#제네릭의-타입-제한-1---배열-힌트-주기)
     - [제네릭의 타입 제한 #2 - 정의된 타입 이용하기](#제네릭의-타입-제한-2---정의된-타입-이용하기)
     - [제네릭의 타입 제한 #3 - `keyof` 사용](#제네릭의-타입-제한-3---keyof-사용)
+  - [타입 추론 (Type Inference)](#타입-추론-type-inference)
+    - [상속 받은 인터페이스의 타입 추론](#상속-받은-인터페이스의-타입-추론)
+    - [Best Common Type](#best-common-type)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
@@ -704,6 +707,52 @@ function getShoppingItemOption<T extends keyof ShoppingItems>(itemOption: T): T 
 
 getShoppingItemOption('name');
 getShoppingItemOption('price'); // 외의 문자열은 오류 발생
+```
+
+## 타입 추론 (Type Inference)
+코드를 작성할 때마다 TypeScript Language Server가 동작하여 타입을 추론해 내는 것이 **타입 추론**이다.
+
+### 상속 받은 인터페이스의 타입 추론
+`Dropdown<T>` 를 상속 받은 `DetailedDropdown<T>` 은 속성에 `value`, `title` 이 존재한다.
+
+```ts
+interface Dropdown<T> {
+  value: T
+  title: string;
+}
+
+interface DetailedDropdown<T> extends Dropdown<T> {
+  description: string;
+  tag: T;
+}
+```
+`DetailedDropdown<T>` 의 전체 속성을 나열해보면 다음과 같다!
+```ts
+interface DetailedDropdown<T> extends Dropdown<T> {
+  description: string;
+  tag: T;
+  value: T;
+  title: string;
+}
+```
+
+따라서 `DetailedDropdown` 에서 제네릭을 number로 지정하면, `tag`, `value` 에는 number 타입만 할당이 가능하다.
+```ts
+var detailItems: DetailedDropdown<number> = {
+  description: 'desc',
+  tag: 10,
+  value: 10,
+  title: 'title',
+}
+```
+
+### Best Common Type
+**Best Common Type**은 새로운 타입이 아니라 TypeScript가 type을 추론하는 알고리즘이다. 유니온을 해가면서 가장 적절한 타입을 추론한다.
+
+예를 들어,
+```ts
+const arr1 = [1, 2, 3]; // Type: number
+const arr2 = [1, 2, true] // Type: number | boolean
 ```
 
 ## [JavaScript] Prototype
