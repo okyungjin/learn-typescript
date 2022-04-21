@@ -23,6 +23,24 @@ function logText(text: string | number) {
 const log = logText('a');
 log.split();
 
+
+// 제네릭에 배열 힌트 주기
+// function logTextLength<T>(text: T[]): T[] {
+//   console.log(text.length);
+//   return text;
+// }
+
+
+// 정의된 타입 이용하기
+interface LengthType {
+  length: number;
+}
+
+function logTextLength<T extends LengthType>(text: T): T {
+  console.log(text.length);
+  return text;
+}
+
 // 제네릭 기본 문법 - 인터페이스
 interface Developer<T> {
   name: string;
