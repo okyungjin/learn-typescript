@@ -45,6 +45,10 @@
   - [타입 단언 (Type Assertion)](#타입-단언-type-assertion)
     - [타입 단언이란](#타입-단언이란)
     - [실용적인 예제 - DOM API 조작](#실용적인-예제---dom-api-조작)
+  - [타입 가드 (Type Guard)](#타입-가드-type-guard)
+    - [타입 가드가 필요한 상황](#타입-가드가-필요한-상황)
+    - [타입 가드 정의 및 사용](#타입-가드-정의-및-사용)
+  - [타입 호환 (Type Compatibility)](#타입-호환-type-compatibility)
   - [[JavaScript] Prototype](#javascript-prototype)
     - [Prototype을 사용하는 이유](#prototype을-사용하는-이유)
     - [Prototype 활용 사례 #1](#prototype-활용-사례-1)
@@ -796,8 +800,58 @@ if (app) {
 ```ts
 const app = document.querySelector('#app') as HTMLDivElement;
 app.innerHTML;
-
 ```
+## 타입 가드 (Type Guard)
+### 타입 가드가 필요한 상황
+아래의 예시에서 `introduce()` 는 `Developer | Person` 타입을 반환하므로 `kyungj` 의 타입 또한 `Developer | Person` 이다.
+
+```ts
+function introduce(): Developer | Person {
+    return { name: 'KyungJin', age: 33, skill: 'TypeScript' }
+}
+
+const kyungj = introduce();
+console.log(kyungj.skill); // Error
+```
+`skill` 이 포함된 객체를 반환했음에도 콘솔에 `kyungj.skill` 을 출력하려고 하면 다음과 같은 오류가 발생한다.
+```
+Property 'skill' does not exist on type 'Developer | Person'.
+```
+`skill` 속성에 접근하려면 아래와 같은 코드를 작성해야 하는데,
+```ts
+if ((kyungj as Developer).skill) {
+  const skill = (kyungj as Developer).skill;
+  console.log(skill);
+} else if ((kyungj as Person).age) {
+  const age = (kyungj as Person).age;
+  console.log(age);
+}
+```
+이렇게 작성할 경우 코드의 중복이 많아지고 가독성도 떨어진다.
+이때 사용하는 것이 **타입 가드**이다.
+
+### 타입 가드 정의 및 사용
+```ts
+// 타입 가드 정의
+function isDeveloper(target: Developer | Person): target is Developer {
+    return (target as Developer).skill !== undefined;
+}
+
+if (isDeveloper(kyungj)) {
+  const skill = kyungj.skill; // age는 사용 불가함
+  console.log(skill);
+} else {
+  const age = kyungj.age;
+  console.log(age); //
+}
+```
+> 타입 가드는 실무에서 자주 적용되는 패턴이니 잘 기억해두자!
+
+## 타입 호환 (Type Compatibility)
+**타입 호환**이란 TypeScript 코드에서 특정 타입이 다른 타입에 잘 맞는지를 의미한다.
+
+
+
 ## [JavaScript] Prototype
 ### Prototype을 사용하는 이유
 ```js
