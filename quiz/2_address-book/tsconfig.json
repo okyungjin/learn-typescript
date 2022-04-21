@@ -4,7 +4,10 @@
     "checkJs": true,
     "target": "es5",
     "lib": ["es2015", "dom", "dom.iterable"],
-    "noImplicitAny": false
+    "noImplicitAny": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true
   },
   "include": ["./src/**/*"]
 }
