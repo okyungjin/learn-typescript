@@ -172,6 +172,23 @@ sumNumbers(10, 20);
 - `"checkJs": true` @ts-check 와 동일한 기능
 - `"noImplicitAny": true` 최소한 any 타입이라도 넣어야 한다.
 
+**전화번호부 실습 tsconfig.json**
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "target": "es5",
+    "lib": ["es2015", "dom", "dom.iterable"],
+    "noImplicitAny": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true
+  },
+  "include": ["./src/**/*"]
+}
+```
+
 ## TypeScript 변수 타입
 ### [기본 타입](example/1_type-basic.ts)
 - string
