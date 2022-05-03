@@ -62,6 +62,7 @@
   - [[JavaScript] Class](#javascript-class)
     - [Class 사용법](#class-사용법)
     - [Class와 Prototype의 관계](#class와-prototype의-관계)
+  - [유틸리티 타입](#유틸리티-타입)
 - [License & Copyright](#license--copyright)
 
 # About Repository
@@ -1066,8 +1067,16 @@ class Person {
 const kyungj = new Person('경진', 27);
 ```
 
+## 유틸리티 타입
 
+[타입스크립트 핸드북 - 유틸리티 타입이란](https://joshua1988.github.io/ts/usage/utility.html#%EC%9C%A0%ED%8B%B8%EB%A6%AC%ED%8B%B0-%ED%83%80%EC%9E%85%EC%9D%B4%EB%9E%80) 게시물에 잘 정리되어 있다.
 
+그 중 Pick에 흥미로운 소스가 있어 메모한다!
+```ts
+type HasThen<T> = Pick<Promise<T>, 'then' | 'catch'>;
+let hasThen: HasThen<number> = Promise.resolve(4);
+hasThen.th // 위에서 'then'만 선택하면 'then'만 제공, 'catch' 선택하면 'catch만 제공'
+```
 
 # License & Copyright
 
